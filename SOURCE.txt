@@ -1,0 +1,27 @@
+Beetle WonderSwan libretro core - corresponding source & provenance
+===================================================================
+
+The file `mednafen_wswan_libretro.so` distributed in this pak is the
+Beetle WonderSwan libretro core. It is NOT an original work of this project.
+
+License : GPL-2.0-or-later
+Authors : Mednafen Team, the Cygne authors, and the libretro contributors
+Source  : https://github.com/libretro/beetle-wswan-libretro
+
+Redistributed binary provenance
+-------------------------------
+Origin            : https://buildbot.libretro.com/nightly/linux/aarch64/latest/mednafen_wswan_libretro.so.zip
+Nightly build date: 2026-06-26
+ELF BuildID[sha1] : d5f9db2e8f2a90a65f4ab834417633a5ddbd5fc6
+
+Written offer (GNU GPL v2, section 3)
+-------------------------------------
+For a period of three (3) years from the date of distribution, the maintainer
+of https://github.com/alecrem/Trimui-Brick-WSC will provide, on request, the
+complete corresponding source code of this binary. The corresponding source is
+the upstream repository above at the revision that produced the binary
+identified by the BuildID listed. Request it by opening an issue on the
+repository.
+
+This pak's own files (launch.sh, default.cfg, packaging) are also licensed
+under GPL-2.0-or-later. See LICENSE.

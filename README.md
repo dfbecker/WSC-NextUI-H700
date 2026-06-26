@@ -16,6 +16,18 @@ emulation core only, not a standalone emulator.
 
 ## Installation
 
+### Option A — Pak Store (recommended)
+
+If the pak is published in the NextUI Pak Store, install it from there; it handles
+the correct `/Emus/<platform>/` location automatically. Then just add your ROMs (see
+step 2 below).
+
+### Option B — Manual
+
+Grab `WSC.zip` from the [latest release](https://github.com/alecrem/Trimui-Brick-WSC/releases/latest)
+and extract it onto the **root of your SD card** (it contains the `Emus/` and `Roms/`
+folders). Or do it by hand:
+
 1. Copy the `WSC.pak` folder to `/Emus/<platform>/` on the SD card:
    - Original Brick → `/Emus/tg5040/WSC.pak/`
    - `tg5050` Brick  → `/Emus/tg5050/WSC.pak/`

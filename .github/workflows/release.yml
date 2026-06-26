@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check tag matches pak.json version
+        run: |
+          set -eu
+          TAG="${GITHUB_REF_NAME}"
+          VER="$(jq -r .version pak.json)"
+          echo "tag=$TAG  pak.json version=$VER"
+          if [ "$TAG" != "$VER" ]; then
+            echo "::error::Tag '$TAG' does not match pak.json version '$VER'"
+            exit 1
+          fi
+
+      - name: Build artifacts
+        run: |
+          set -eu
+          PAK_SRC="Emus/tg5040/WSC.pak"
+
+          # --- WSC.pak.zip: Pak Store artifact (pak root contents at zip root) ---
+          rm -rf build && mkdir -p build/pak
+          cp "$PAK_SRC/default.cfg" "$PAK_SRC/launch.sh" \
+             "$PAK_SRC/mednafen_wswan_libretro.so" build/pak/
+          cp LICENSE SOURCE.txt build/pak/
+          (cd build/pak && zip -r -X "$GITHUB_WORKSPACE/WSC.pak.zip" .)
+
+          # --- WSC.zip: full SD overlay for manual install ---
+          mkdir -p build/overlay
+          cp -R Emus build/overlay/
+          cp -R Roms build/overlay/
+          # ship license/source next to each platform's pak binary too
+          for d in build/overlay/Emus/*/WSC.pak; do
+            cp LICENSE SOURCE.txt "$d/"
+          done
+          find build/overlay -name '.DS_Store' -delete
+          (cd build/overlay && zip -r -X "$GITHUB_WORKSPACE/WSC.zip" Emus Roms)
+
+          echo "--- WSC.pak.zip ---"; unzip -l WSC.pak.zip
+          echo "--- WSC.zip ---";     unzip -l WSC.zip
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            WSC.pak.zip
+            WSC.zip
+          fail_on_unmatched_files: true
