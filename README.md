@@ -8,6 +8,14 @@ both the monochrome WonderSwan and the Color model. The core runs through
 `minarch`, the libretro frontend already bundled with NextUI; the `.so` file is the
 emulation core only, not a standalone emulator.
 
+## Download
+
+Get the latest build from the
+[**latest release**](https://github.com/alecrem/Trimui-Brick-WSC/releases/latest),
+or scan the QR code:
+
+![QR code to the latest release](qr-code.png)
+
 ## Compatibility
 
 - 💡 **NextUI only**
