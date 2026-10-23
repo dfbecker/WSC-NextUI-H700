@@ -32,25 +32,32 @@ or scan the QR code:
 
 The H700 build of NextUI does not include the Pak Store yet, so install by hand:
 
-Grab `WSC.zip` from the [latest release](https://github.com/dfbecker/WSC-NextUI-H700/releases/latest)
-and extract it onto the **root of your SD card** (it contains the `Emus/` and `Roms/`
-folders). Or do it by hand:
+1. Download `WSC.zip` from the [latest release](https://github.com/dfbecker/WSC-NextUI-H700/releases/latest)
+   and unzip it on your computer.
+2. Copy the `WSC.pak` folder (inside `Emus/h700/`) to `/Emus/h700/` on your SD card.
+3. Put your ROMs (`.ws`, `.wsc`, `.pc2`, `.zip`) in
+   `/Roms/WonderSwan Color (WSC)/` on the SD card. Create that folder if it
+   doesn't exist yet.
+4. Put the SD card back in your device and turn it on. **WonderSwan Color** appears
+   in the game list; NextUI only shows it once that ROM folder has at least one game.
 
-1. Copy the `WSC.pak` folder to `/Emus/h700/WSC.pak/` on the SD card.
-2. Place your ROMs (`.ws`, `.wsc`, `.pc2`, `.zip`) in
-   `/Roms/Bandai WonderSwan Color (WSC)/`
-3. SD card layout:
-   ```
-   /Emus/h700/WSC.pak/
-     ├── default.cfg
-     ├── launch.sh
-     └── mednafen_wswan_libretro.so   # core (not a standalone emulator)
-   /Roms/Bandai WonderSwan Color (WSC)/   # ROMs
-   ```
-4. Reboot the device.
+SD card layout afterwards:
 
-> The ROM folder name must end in `(WSC)` so NextUI associates it with `WSC.pak`.
-> If you want a different name, change both the `.pak` name and the `(TAG)` together.
+```
+/Emus/h700/WSC.pak/
+  ├── default.cfg
+  ├── launch.sh
+  └── mednafen_wswan_libretro.so   # core (not a standalone emulator)
+/Roms/WonderSwan Color (WSC)/   # ROMs
+```
+
+> ⚠️ **Copy the `WSC.pak` folder, not the whole `Emus` or `Roms` folder.** If your
+> computer asks whether to *Replace* an existing `Emus` or `Roms` folder on the SD
+> card, choose *Stop*: on a Mac, *Replace* deletes everything already in that folder,
+> including your other paks and games.
+
+> NextUI only looks for `(WSC)` at the end of the ROM folder name. You can change
+> the rest to anything you like, e.g. `Bandai WonderSwan Color (WSC)`.
 >
 > Do not put the pak inside the hidden `.system` folder; NextUI replaces that folder
 > on every update.
