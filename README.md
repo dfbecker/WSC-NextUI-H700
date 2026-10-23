@@ -142,13 +142,10 @@ The redistributed binary was downloaded from the libretro nightly buildbot:
 - Source revision: [`da6d0d9`](https://github.com/libretro/beetle-wswan-libretro/commit/da6d0d9acb8d4e9bd6725ab44225a275325d8352)
   (the core reports itself as `Beetle WonderSwan v0.9.35.1 da6d0d9`)
 
-### Corresponding source (GPLv2 §3)
+### Written offer for source code (GPLv2 §3)
 
-Every release of this repository includes
-`beetle-wswan-libretro-da6d0d9-source.tar.gz`, the complete source of the bundled
-core at the revision above, next to the binary downloads.
-
-In addition, for a period of **three (3) years** from the date of distribution, the
-maintainer of this repository will provide, on request, the complete corresponding
-source code of the bundled `mednafen_wswan_libretro.so` binary. Request it by
-opening an issue on this repository.
+In accordance with the GNU GPL v2, for a period of **three (3) years** from the date
+of distribution, the maintainer of this repository will provide, on request, the
+complete corresponding source code of the bundled `mednafen_wswan_libretro.so`
+binary. The corresponding source is the upstream repository above at the source
+revision listed; request it by opening an issue on this repository.

@@ -16,17 +16,13 @@ ELF BuildID[sha1] : d5f9db2e8f2a90a65f4ab834417633a5ddbd5fc6
 Source revision   : da6d0d9acb8d4e9bd6725ab44225a275325d8352
                     (the core reports "Beetle WonderSwan v0.9.35.1 da6d0d9")
 
-Corresponding source (GNU GPL v2, section 3)
---------------------------------------------
-Each release of https://github.com/dfbecker/WSC-NextUI-H700 includes
-beetle-wswan-libretro-da6d0d9-source.tar.gz, the complete source of the
-upstream repository above at the revision listed, next to the binary
-downloads.
-
-In addition, for a period of three (3) years from the date of distribution,
-the maintainer of https://github.com/dfbecker/WSC-NextUI-H700 will
-provide, on request, the complete corresponding source code of this binary.
-Request it by opening an issue on that repository.
+Written offer (GNU GPL v2, section 3)
+-------------------------------------
+For a period of three (3) years from the date of distribution, the maintainer
+of https://github.com/dfbecker/WSC-NextUI-H700 will provide, on request, the
+complete corresponding source code of this binary. The corresponding source is
+the upstream repository above at the source revision listed. Request it by
+opening an issue on that repository.
 
 This pak is a fork of https://github.com/alecrem/Trimui-Brick-WSC.
 Its own files (launch.sh, default.cfg, packaging) are also licensed under
