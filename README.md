@@ -1,4 +1,4 @@
-# WSC.pak — Bandai WonderSwan / WonderSwan Color for Anbernic H700 devices (NextUI)
+# WSC.pak — WonderSwan / WonderSwan Color for NextUI on Anbernic H700 devices
 
 Emulation pak for the **Bandai WonderSwan** and **WonderSwan Color** on Anbernic
 RG XX handhelds with the H700 chip, running
