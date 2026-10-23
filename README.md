@@ -1,7 +1,12 @@
-# WSC.pak — Bandai WonderSwan / WonderSwan Color for the Trimui Brick (NextUI)
+# WSC.pak — Bandai WonderSwan / WonderSwan Color for Anbernic H700 devices (NextUI)
 
-Emulation pak for the **Bandai WonderSwan** and **WonderSwan Color** on the Trimui
-Brick (`tg5040` and `tg5050`) running the **NextUI** firmware.
+Emulation pak for the **Bandai WonderSwan** and **WonderSwan Color** on Anbernic
+RG XX handhelds with the H700 chip, running
+[NextUI for Anbernic H700](https://github.com/pvaibhav/NextUI/releases)
+(platform folder `h700`).
+
+> This is an H700 port of [alecrem/Trimui-Brick-WSC](https://github.com/alecrem/Trimui-Brick-WSC),
+> the WonderSwan pak for the Trimui Brick. If you have a Trimui Brick, use that one.
 
 It uses the **Beetle WonderSwan** libretro core (`mednafen_wswan`), which emulates
 both the monochrome WonderSwan and the Color model. The core runs through
@@ -11,40 +16,32 @@ emulation core only, not a standalone emulator.
 ## Download
 
 Get the latest build from the
-[**latest release**](https://github.com/alecrem/Trimui-Brick-WSC/releases/latest),
+[**latest release**](https://github.com/dfbecker/WSC-NextUI-H700/releases/latest),
 or scan the QR code:
 
 ![QR code to the latest release](qr-code.png)
 
 ## Compatibility
 
-- 💡 **NextUI only**
-- 🕹️ Trimui Brick (`tg5040`) and the `tg5050` revision
+- 💡 **NextUI for Anbernic H700 only**
+- 🕹️ Anbernic devices supported by NextUI's `h700` platform (RG 28XX, 34XX, 35XX,
+  40XX, CubeXX and SP families)
 - `mednafen_wswan_libretro.so` core built for **aarch64** (ARM64)
 
 ## Installation
 
-### Option A — Pak Store (recommended)
+The H700 build of NextUI does not include the Pak Store yet, so install by hand:
 
-If the pak is published in the NextUI Pak Store, install it from there; it handles
-the correct `/Emus/<platform>/` location automatically. Then just add your ROMs (see
-step 2 below).
-
-### Option B — Manual
-
-Grab `WSC.zip` from the [latest release](https://github.com/alecrem/Trimui-Brick-WSC/releases/latest)
+Grab `WSC.zip` from the [latest release](https://github.com/dfbecker/WSC-NextUI-H700/releases/latest)
 and extract it onto the **root of your SD card** (it contains the `Emus/` and `Roms/`
 folders). Or do it by hand:
 
-1. Copy the `WSC.pak` folder to `/Emus/<platform>/` on the SD card:
-   - Original Brick → `/Emus/tg5040/WSC.pak/`
-   - `tg5050` Brick  → `/Emus/tg5050/WSC.pak/`
-   (you can copy both; the core is identical)
+1. Copy the `WSC.pak` folder to `/Emus/h700/WSC.pak/` on the SD card.
 2. Place your ROMs (`.ws`, `.wsc`, `.pc2`, `.zip`) in
    `/Roms/Bandai WonderSwan Color (WSC)/`
 3. SD card layout:
    ```
-   /Emus/tg5040/WSC.pak/
+   /Emus/h700/WSC.pak/
      ├── default.cfg
      ├── launch.sh
      └── mednafen_wswan_libretro.so   # core (not a standalone emulator)
@@ -54,6 +51,23 @@ folders). Or do it by hand:
 
 > The ROM folder name must end in `(WSC)` so NextUI associates it with `WSC.pak`.
 > If you want a different name, change both the `.pak` name and the `(TAG)` together.
+>
+> Do not put the pak inside the hidden `.system` folder; NextUI replaces that folder
+> on every update.
+
+## What changed from the Trimui Brick pak
+
+- The pak lives in `/Emus/h700/` instead of `/Emus/tg5040/`; NextUI on H700 only
+  looks in its own platform folder.
+- The log redirect at the end of `launch.sh`. On Anbernic's stock OS `/bin/sh` is
+  `dash`, which reads the Bash-only `&>` as "run in the background", so the game
+  would start and NextUI would immediately return to its menu. The pak uses the
+  POSIX form `> file 2>&1` instead.
+- Nothing else. The core, its options and the controls are the same. The core only
+  needs `libc`, `libstdc++` and the dynamic loader, which are present on all three
+  OSes NextUI supports on H700 (stock, StockMod and BaseOS). NextUI rc11's H700 SDL
+  button renumbering does not affect it: controls go through `minarch`, and the pak
+  ships no `bind` lines.
 
 ## Configuration notes
 
@@ -71,15 +85,15 @@ These settings can be changed from the emulator menu (Menu) and persisted with
 
 ## Default button mapping
 
-| Brick control | WonderSwan |
-|---------------|-----------|
-| D-Pad         | X Cursor (primary pad) |
-| L1 / R1       | Y Cursor Left / Right (second pad) |
-| L2 / R2       | Y Cursor Down / Up (second pad) |
-| A             | A button |
-| B             | B button |
-| Start         | Start |
-| Select        | Rotate screen + active D-Pad |
+| Device control | WonderSwan |
+|----------------|-----------|
+| D-Pad          | X Cursor (primary pad) |
+| L1 / R1        | Y Cursor Left / Right (second pad) |
+| L2 / R2        | Y Cursor Down / Up (second pad) |
+| A              | A button |
+| B              | B button |
+| Start          | Start |
+| Select         | Rotate screen + active D-Pad |
 
 This is NextUI's default mapping (the pak ships no `bind` lines, so every button —
 including the full Y Cursor — shows up in **Menu → Controls** and can be remapped).
@@ -93,6 +107,7 @@ the D-Pad to the Y Cursor for that game and persist it with *Save for game*.
 
 ## Credits
 
+- Original Trimui Brick pak: [alecrem/Trimui-Brick-WSC](https://github.com/alecrem/Trimui-Brick-WSC).
 - Core: [beetle-wswan-libretro](https://github.com/libretro/beetle-wswan-libretro)
   (Mednafen / Cygne), aarch64 binary from the libretro buildbot.
 - Pak structure based on the NextUI emulator pak format.
@@ -104,7 +119,7 @@ This project is licensed under the **GNU General Public License v2.0 or later**
 
 ### Bundled emulator core
 
-`Emus/<platform>/WSC.pak/mednafen_wswan_libretro.so` is **not** an original work of
+`Emus/h700/WSC.pak/mednafen_wswan_libretro.so` is **not** an original work of
 this project. It is the **Beetle WonderSwan** libretro core:
 
 - Copyright © its respective authors (Mednafen Team, the Cygne authors, and the
@@ -117,12 +132,16 @@ The redistributed binary was downloaded from the libretro nightly buildbot:
 - URL: <https://buildbot.libretro.com/nightly/linux/aarch64/latest/mednafen_wswan_libretro.so.zip>
 - Build date (nightly): 2026-06-26
 - ELF `BuildID[sha1]`: `d5f9db2e8f2a90a65f4ab834417633a5ddbd5fc6`
+- Source revision: [`da6d0d9`](https://github.com/libretro/beetle-wswan-libretro/commit/da6d0d9acb8d4e9bd6725ab44225a275325d8352)
+  (the core reports itself as `Beetle WonderSwan v0.9.35.1 da6d0d9`)
 
-### Written offer for source code (GPLv2 §3)
+### Corresponding source (GPLv2 §3)
 
-In accordance with the GNU GPL v2, for a period of **three (3) years** from the date
-of distribution, the maintainer of this repository will provide, on request, the
-complete corresponding source code of the bundled `mednafen_wswan_libretro.so`
-binary. The corresponding source is the upstream repository above at the revision
-that produced the binary identified by the `BuildID` listed; request it by opening an
-issue on this repository.
+Every release of this repository includes
+`beetle-wswan-libretro-da6d0d9-source.tar.gz`, the complete source of the bundled
+core at the revision above, next to the binary downloads.
+
+In addition, for a period of **three (3) years** from the date of distribution, the
+maintainer of this repository will provide, on request, the complete corresponding
+source code of the bundled `mednafen_wswan_libretro.so` binary. Request it by
+opening an issue on this repository.
