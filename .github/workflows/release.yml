@@ -8,6 +8,11 @@ on:
 permissions:
   contents: write
 
+env:
+  # upstream revision the bundled mednafen_wswan_libretro.so was built from
+  CORE_REPO: https://github.com/libretro/beetle-wswan-libretro.git
+  CORE_COMMIT: da6d0d9acb8d4e9bd6725ab44225a275325d8352
+
 jobs:
   package:
     runs-on: ubuntu-latest
@@ -25,25 +30,41 @@ jobs:
             exit 1
           fi
 
+      - name: Check launch.sh is POSIX
+        run: |
+          set -eu
+          f=Emus/h700/WSC.pak/launch.sh
+          dash -n "$f"
+          if grep -n '^[^#]*&>' "$f"; then
+            echo "::error file=$f::Bash-only '&>' redirect breaks under dash on H700"
+            exit 1
+          fi
+          if grep -q "$(printf '\r')" "$f"; then
+            echo "::error file=$f::Windows line endings"
+            exit 1
+          fi
+
       - name: Build artifacts
         run: |
           set -eu
-          PAK_SRC="Emus/tg5040/WSC.pak"
+          PAK_SRC="Emus/h700/WSC.pak"
 
           # --- WSC.pak.zip: Pak Store artifact (pak root contents at zip root) ---
           rm -rf build && mkdir -p build/pak
           cp "$PAK_SRC/default.cfg" "$PAK_SRC/launch.sh" \
              "$PAK_SRC/mednafen_wswan_libretro.so" build/pak/
           cp LICENSE SOURCE.txt build/pak/
+          chmod 755 build/pak/launch.sh build/pak/mednafen_wswan_libretro.so
           (cd build/pak && zip -r -X "$GITHUB_WORKSPACE/WSC.pak.zip" .)
 
           # --- WSC.zip: full SD overlay for manual install ---
           mkdir -p build/overlay
           cp -R Emus build/overlay/
           cp -R Roms build/overlay/
-          # ship license/source next to each platform's pak binary too
+          # ship license/source next to the pak binary too
           for d in build/overlay/Emus/*/WSC.pak; do
             cp LICENSE SOURCE.txt "$d/"
+            chmod 755 "$d/launch.sh" "$d/mednafen_wswan_libretro.so"
           done
           find build/overlay -name '.DS_Store' -delete
           (cd build/overlay && zip -r -X "$GITHUB_WORKSPACE/WSC.zip" Emus Roms)
@@ -51,10 +72,22 @@ jobs:
           echo "--- WSC.pak.zip ---"; unzip -l WSC.pak.zip
           echo "--- WSC.zip ---";     unzip -l WSC.zip
 
+      - name: Package core source (GPL corresponding source)
+        run: |
+          set -eu
+          SHORT="$(printf '%s' "$CORE_COMMIT" | cut -c1-7)"
+          git init -q core-src
+          git -C core-src fetch -q --depth 1 "$CORE_REPO" "$CORE_COMMIT"
+          git -C core-src archive --format=tar.gz \
+            --prefix="beetle-wswan-libretro-$SHORT/" \
+            -o "$GITHUB_WORKSPACE/beetle-wswan-libretro-$SHORT-source.tar.gz" FETCH_HEAD
+          ls -l beetle-wswan-libretro-*-source.tar.gz
+
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             WSC.pak.zip
             WSC.zip
+            beetle-wswan-libretro-*-source.tar.gz
           fail_on_unmatched_files: true
