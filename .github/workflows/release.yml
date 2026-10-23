@@ -8,11 +8,6 @@ on:
 permissions:
   contents: write
 
-env:
-  # upstream revision the bundled mednafen_wswan_libretro.so was built from
-  CORE_REPO: https://github.com/libretro/beetle-wswan-libretro.git
-  CORE_COMMIT: da6d0d9acb8d4e9bd6725ab44225a275325d8352
-
 jobs:
   package:
     runs-on: ubuntu-latest
@@ -72,22 +67,10 @@ jobs:
           echo "--- WSC.pak.zip ---"; unzip -l WSC.pak.zip
           echo "--- WSC.zip ---";     unzip -l WSC.zip
 
-      - name: Package core source (GPL corresponding source)
-        run: |
-          set -eu
-          SHORT="$(printf '%s' "$CORE_COMMIT" | cut -c1-7)"
-          git init -q core-src
-          git -C core-src fetch -q --depth 1 "$CORE_REPO" "$CORE_COMMIT"
-          git -C core-src archive --format=tar.gz \
-            --prefix="beetle-wswan-libretro-$SHORT/" \
-            -o "$GITHUB_WORKSPACE/beetle-wswan-libretro-$SHORT-source.tar.gz" FETCH_HEAD
-          ls -l beetle-wswan-libretro-*-source.tar.gz
-
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
           files: |
             WSC.pak.zip
             WSC.zip
-            beetle-wswan-libretro-*-source.tar.gz
           fail_on_unmatched_files: true
