@@ -1,19 +1,19 @@
 {
   "name": "WSC",
-  "version": "v1.0.0",
+  "version": "v1.1.0",
   "type": "EMU",
   "license": "GPL-2.0-or-later",
-  "description": "Beetle WonderSwan (mednafen_wswan) core to emulate Bandai WonderSwan / WonderSwan Color on the Trimui Brick (tg5040 / tg5050) with NextUI.",
-  "author": "alecrem",
-  "repo_url": "https://github.com/alecrem/Trimui-Brick-WSC",
+  "description": "Beetle WonderSwan (mednafen_wswan) core to emulate Bandai WonderSwan / WonderSwan Color with NextUI on Anbernic H700 devices.",
+  "author": "alecrem, dfbecker",
+  "repo_url": "https://github.com/dfbecker/WSC-NextUI-H700",
   "release_filename": "WSC.pak.zip",
   "changelog": {
-    "v1.0.0": "Initial release. mednafen_wswan core (aarch64) from the libretro buildbot."
+    "v1.0.0": "Initial release for the Trimui Brick (alecrem/Trimui-Brick-WSC). mednafen_wswan core (aarch64) from the libretro buildbot.",
+    "v1.1.0": "Port to Anbernic H700 (h700 platform). launch.sh uses a POSIX log redirect so it works under dash on Anbernic's stock OS."
   },
   "update_ignore": [],
   "screenshots": [],
   "platforms": [
-    "tg5040",
-    "tg5050"
+    "h700"
   ]
 }
